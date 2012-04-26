@@ -10,7 +10,7 @@ glob = "*.jpg" #get all jpg images...
 sent_dir = "sent" #move sent files here...
 queue_dir = "queue"
 
-############### Nothing else to mess with down here... ###################
+############### These are not the droids you're looking for... ###################
 
 
 def send_file(path,to,subject="Attachment: #{Time.now.strftime('%D %T')}",from=@from_address)  

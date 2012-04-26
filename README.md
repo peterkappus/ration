@@ -6,19 +6,23 @@ Great for publishing to tumblr/facebook via email or delivering regular doses of
 
 ##Usage & Installation
 1. Put the files on your server somewhere (maybe via SCP)
-  %> scp -r * remote_user@remote_box:/home/user_name/path/to/files
-2. Update variables: to_address & @from_address OPTIONAL: subject, glob (to send other types of files), sent & queue dirs (if you want to use other paths)
+
+    %> scp -r * remote_user@remote_box:/home/user_name/path/to/files
+2. Update variables: to\_address & @from\_address OPTIONAL: subject, glob (to send other types of files), sent & queue dirs (if you want to use other paths)
 3. Install Pony Gem 
-  %> gem install pony
+
+    %> gem install pony
 4. Fill up the queue directory with goodies (maybe via SCP)
-  %> scp queue/* remote_user@remote_box.com:/home/user_name/path/to/queue    
+
+    %> scp queue/* remote_user@remote_box.com:/home/user_name/path/to/queue    
 5. Make sure both directories are writeable by the script (probably wont ahve to do this if cron runs as yourself)
 6. Setup your Cron Job to call this script whenever you wish
-  %> crontab -e
+
+    %> crontab -e
 
 ###example cron:
-  55 */3 * * * /usr/local/rvm/bin/ruby-1.9.2-p318 /home/peterk/toys/pb0t.tumblr.com/gen.rb
-  #Run at 55 minutes past the hour every three hours using a custom RVM managed ruby version.
+    55 */3 * * * /usr/local/rvm/bin/ruby-1.9.2-p318 /home/peterk/toys/pb0t.tumblr.com/gen.rb
+    #Run at 55 minutes past the hour every three hours using a custom RVM managed ruby version.
 
 
 ##Credits
