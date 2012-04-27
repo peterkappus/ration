@@ -34,7 +34,7 @@ if(Dir.glob("#{queue_dir}/#{glob}").count < 10)
   #TODO: include the machine name or IP in the body...
   #try this: 
   hostname = Socket.gethostbyname(Socket.gethostname).first
-  Pony.mail(:to => @notify_address, :from=>@from_address, :subject => "Your Ration queue is running low!", :body => 'Go fill \'er up...', :via=>:sendmail, :via_options => { :location  => '/usr/sbin/sendmail', :arguments => nil})
+  Pony.mail(:to => @notify_address, :from=>@from_address, :subject => "Your Ration queue is running low on #{hostname}!", :body => 'Go fill \'er up... sent from #{$0}', :via=>:sendmail, :via_options => { :location  => '/usr/sbin/sendmail', :arguments => nil})
 end
 
 
