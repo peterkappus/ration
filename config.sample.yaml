@@ -1,0 +1,5 @@
+to: somebody@example.co
+from: sender@example.com
+notify: admin@example.com
+sent_dir: sent
+queue_dir: queue

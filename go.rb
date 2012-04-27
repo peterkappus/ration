@@ -1,14 +1,18 @@
 #!/usr/bin/ruby
 require 'pony'
+require 'yaml'
 
-to_address = "somebody@example.com"
-@from_address = "from@example.com"
+@config = YAML::load_file 'config.yaml'
+
+to_address = @config['to']
+@from_address = @config['from']
+@notify_address = @config['notify']# "somebody@whomever.com" #send mail when queue gets low
 
 subject = "Special Delivery: #{Time.now.strftime("%Y-%m-%d %H:%M")}"
 
 glob = "*.jpg" #get all jpg images...
-sent_dir = "sent" #move sent files here...
-queue_dir = "queue"
+sent_dir = @config['sent_dir'] || "sent" #move sent files here...
+queue_dir = @config['queue_dir'] || "queue"
 
 ############### These are not the droids you're looking for... ###################
 
@@ -24,6 +28,16 @@ run_dir = File.dirname(__FILE__)
 queue_dir = run_dir + "/" + queue_dir
 sent_dir = run_dir + "/" + sent_dir
 
+
+#alert the admin if our queue is running low... need to DRY this up.
+if(Dir.glob("#{queue_dir}/#{glob}").count < 10)
+  #TODO: include the machine name or IP in the body...
+  #try this: 
+  hostname = Socket.gethostbyname(Socket.gethostname).first
+  Pony.mail(:to => @notify_address, :from=>@from_address, :subject => "Your Ration queue is running low!", :body => 'Go fill \'er up...', :via=>:sendmail, :via_options => { :location  => '/usr/sbin/sendmail', :arguments => nil})
+end
+
+
 #make our sent directory if it doesn't already exist
 Dir.mkdir(sent_dir,755) unless File.exists? sent_dir
 
@@ -37,6 +51,6 @@ file = files[rand * files.length]
 send_file file, to_address, subject
 
 #move it to the "sent" folder
-File.rename "#{file}", "#{sent_dir}/#{File.basename(file)}"
+File.rename "#{file}", "#{sent_dir}/#{File.basename(file)}" if file
 
 #finito!
