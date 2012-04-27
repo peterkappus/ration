@@ -8,7 +8,7 @@ Great for publishing to tumblr/facebook via email or delivering regular doses of
 1. Put the files on your server somewhere (maybe via SCP)
 
     %> scp -r * remote_user@remote_box:/home/user_name/path/to/files
-2. Copy config.sample.yaml to config.yaml and update your config variables as needed
+2. Rename config.sample.yaml to config.yaml and update your config variables as needed
 3. Install Pony Gem 
 
     %> gem install pony
@@ -25,9 +25,13 @@ Great for publishing to tumblr/facebook via email or delivering regular doses of
     #Run at 55 minutes past the hour every three hours using a custom RVM managed ruby version.
 
 ##To Do
-* Put options in a config.yaml file. 
 * Write some tests?
 * Include server name (FQDN) in notification email
+* Make low queue volume notification threshold configurable
+
+##Done
+* Put options in a config.yaml file. 
+
 
 ##Credits
   Ration uses Pony to send mail
