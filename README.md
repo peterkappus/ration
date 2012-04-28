@@ -26,12 +26,12 @@ Great for publishing to tumblr/facebook via email or delivering regular doses of
 
 ##To Do
 * Write some tests?
-* Include server name (FQDN) in notification email
 * Make low queue volume notification threshold configurable
 
 ##Done
 * Put options in a config.yaml file. 
-
+* Include server name (FQDN) in notification email
+* Include script path in notification email
 
 ##Credits
   Ration uses Pony to send mail
