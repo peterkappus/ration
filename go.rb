@@ -29,7 +29,7 @@ end
 #alert the admin if our queue is running low... need to DRY this up.
 if(Dir.glob("#{queue_dir}/#{glob}").count < 10)
   hostname = Socket.gethostbyname(Socket.gethostname).first
-  Pony.mail(:to => @notify_address, :from=>@from_address, :subject => "Your Ration queue is running low on #{hostname}!", :body => "Go fill \'er up... sent from #{run_dir}/#{$0}", :via=>:sendmail, :via_options => { :location  => '/usr/sbin/sendmail', :arguments => nil})
+  Pony.mail(:to => @notify_address, :from=>@from_address, :subject => "Your Ration queue is running low on #{hostname}!", :body => "Go fill \'er up... sent from #{$0}", :via=>:sendmail, :via_options => { :location  => '/usr/sbin/sendmail', :arguments => nil})
 end
 
 
