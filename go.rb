@@ -18,9 +18,9 @@ sent_dir = run_dir + "/" + @config['sent_dir'] || "sent" #move sent files here..
 queue_dir = run_dir + "/" + @config['queue_dir'] || "queue"
 
 def send_file(path,to,subject="Attachment: #{Time.now.strftime('%D %T')}",from=@from_address)  
-  puts "Sending #{path} to #{@address}" if @debug
+  puts "Sending #{path} to #{to}" if @debug
   #must pass "nil" argument for orion (OCS Solutions) to send properly
- # Pony.mail(:to => to, :from=>from, :subject => subject, :body => '', :via=>:sendmail, :attachments => {"image.jpg" => File.read(path)}, :via_options => { :location  => '/usr/sbin/sendmail', :arguments => nil})
+  Pony.mail(:to => to, :from=>from, :subject => subject, :body => '', :via=>:sendmail, :attachments => {"image.jpg" => File.read(path)}, :via_options => { :location  => '/usr/sbin/sendmail', :arguments => nil})
 end
 
 
