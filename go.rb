@@ -23,27 +23,19 @@ def send_file(path,to,subject="Attachment: #{Time.now.strftime('%D %T')}",from=@
   Pony.mail(:to => to, :from=>from, :subject => subject, :body => '', :via=>:sendmail, :attachments => {"image.jpg" => File.read(path)}, :via_options => { :location  => '/usr/sbin/sendmail', :arguments => nil})
 end
 
-
-
-
 #alert the admin if our queue is running low... need to DRY this up.
 if(Dir.glob("#{queue_dir}/#{glob}").count < 10)
   hostname = Socket.gethostbyname(Socket.gethostname).first
   Pony.mail(:to => @notify_address, :from=>@from_address, :subject => "Your Ration queue is running low on #{hostname}!", :body => "Go fill \'er up... sent from #{$0}", :via=>:sendmail, :via_options => { :location  => '/usr/sbin/sendmail', :arguments => nil})
 end
 
-
 #make our sent directory if it doesn't already exist
 Dir.mkdir(sent_dir,755) unless File.exists? sent_dir
 
-#get all files
-files = Dir.glob("#{queue_dir}/#{glob}")
-
-#choose one at random
-file = files[rand * files.length]
-
-#send it
-send_file file, to_address, subject
+#get all files matching our glob
+#shuffle them
+#send the first one in the shuffled list
+send_file Dir.glob("#{queue_dir}/#{glob}").shuffle.first, to_address, subject
 
 #move it to the "sent" folder
 File.rename "#{file}", "#{sent_dir}/#{File.basename(file)}" if file
