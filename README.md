@@ -9,9 +9,10 @@ Great for publishing to tumblr/facebook via email or delivering regular doses of
 
     %> scp -r * remote_user@remote_box:/home/user_name/path/to/files
 2. Rename *config.sample.yaml* to *config.yaml* and update your config variables as needed
-3. Install Pony Gem 
-
+3. Install the Pony Gem 
     %> gem install pony
+		Or use Bundler
+		%> bundle install
 4. Fill up the queue directory with goodies (maybe via SCP)
 
     %> scp queue/* remote_user@remote_box.com:/home/user_name/path/to/queue    
