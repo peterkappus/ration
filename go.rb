@@ -17,7 +17,7 @@ glob = "*.jpg" #get all jpg images...
 sent_dir = run_dir + "/" + @config['sent_dir'] || "sent" #move sent files here...
 queue_dir = run_dir + "/" + @config['queue_dir'] || "queue"
 
-def send_file(path,to,subject="Attachment: #{Time.now.strftime('%D %T')}",from=@from_address)  
+def send_file(path,to,subject="Attachment: #{Time.now.strftime('%D %T')}",from=@from_address)
   puts "Sending #{path} to #{to}" if @debug
   #must pass "nil" argument for orion (OCS Solutions) to send properly
   Pony.mail(:to => to, :from=>from, :subject => subject, :body => '', :via=>:sendmail, :attachments => {"image.jpg" => File.read(path)}, :via_options => { :location  => '/usr/sbin/sendmail', :arguments => nil})
@@ -33,11 +33,13 @@ end
 Dir.mkdir(sent_dir,755) unless File.exists? sent_dir
 
 #get all files matching our glob
-#shuffle them
-#send the first one in the shuffled list
-send_file Dir.glob("#{queue_dir}/#{glob}").shuffle.first, to_address, subject
+#shuffle them and grab the first one
+file = Dir.glob("#{queue_dir}/#{glob}").shuffle.first
+
+#send it
+send_file file, to_address, subject
 
 #move it to the "sent" folder
-File.rename "#{file}", "#{sent_dir}/#{File.basename(file)}" if file
+File.rename "#{file}", "#{sent_dir}/#{File.basename(file)}"
 
 #finito!
